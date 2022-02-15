@@ -53,6 +53,34 @@ class Day_2 {
         return depth * horizontal;
     }
 
+    public static int secondStar(ArrayList<String> list) {
+        int depth = 0;
+        int horizontal = 0;
+        int aim = 0;
+        int i = 0;
+
+        while (i < list.size()) {
+            int num = getInt(list.get(i));
+            String condition = getString(list.get(i));
+
+            switch (condition) {
+                case "forward":
+                    horizontal += num;
+                    depth = depth + (aim * num);
+                    break;
+                case "down":
+                    aim += num;
+                    break;
+                case "up":
+                    aim -= num;
+                    break;
+            }
+
+            i++;
+        }
+        return depth * horizontal;
+    }
+
     public static void main(String[] args) {
         ArrayList<String> input = new ArrayList<String>();
 
@@ -72,6 +100,7 @@ class Day_2 {
         }
 
         System.out.println("First star: " + firstStar(input));
+        System.out.println("Second star: " + secondStar(input));
 
     }
 }
