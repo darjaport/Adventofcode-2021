@@ -18,7 +18,7 @@ class Day_5 {
         return values;
     }
 
-    public static int firstStar(ArrayList<ArrayList<Integer>> list) {
+    public static int secondStar(ArrayList<ArrayList<Integer>> list) {
         int[][] grid = new int[1000][1000];
         int sum = 0;
 
@@ -31,9 +31,7 @@ class Day_5 {
             int x2 = arr.get(2);
             int y2 = arr.get(3);
 
-            if (x1 != x2 && y1 != y2) {
-                continue;
-            } else if (x1 == x2) {
+            if (x1 == x2) {
                 for (int y = Math.min(y1, y2); y <= Math.max(y1, y2); y++) {
                     grid[y][x1] += 1;
 
@@ -50,16 +48,44 @@ class Day_5 {
                         sum++;
                     }
                 }
+            } else {
+                if ((x1 < x2 && y1 < y2) || (x1 > x2 && y1 > y2)) {
+                    int x = Math.min(x1, x2);
+                    int y = Math.min(y1, y2);
+
+                    while (x <= Math.max(x1, x2) && y <= Math.max(y1, y2)) {
+                        grid[y][x] += 1;
+                        if (grid[y][x] == 2) {
+                            sum++;
+                        }
+                        x++;
+                        y++;
+                    }
+                } else if (x1 < x2 && y1 > y2) {
+                    int x = Math.min(x1, x2);
+                    int y = Math.max(y1, y2);
+                    while (x <= Math.max(x1, x2) && y >= Math.min(y1, y2)) {
+                        grid[y][x] += 1;
+                        if (grid[y][x] == 2) {
+                            sum++;
+                        }
+                        x++;
+                        y--;
+                    }
+                } else if (x1 > x2 && y1 < y2) {
+                    int x = Math.max(x1, x2);
+                    int y = Math.min(y1, y2);
+                    while (x >= Math.min(x1, x2) && y <= Math.max(y1, y2)) {
+                        grid[y][x] += 1;
+                        if (grid[y][x] == 2) {
+                            sum++;
+                        }
+                        x--;
+                        y++;
+                    }
+                }
             }
         }
-
-        // for (ArrayList<Integer> x : list) {
-        // System.out.println(x);
-        // }
-
-        // for (int[] x : grid) {
-        // System.out.println(Arrays.toString(x));
-        // }
 
         return sum;
     }
@@ -82,7 +108,7 @@ class Day_5 {
             System.out.println(e);
         }
 
-        System.out.println("First star: " + firstStar(input));
+        System.out.println("Second star: " + secondStar(input));
 
     }
 }
