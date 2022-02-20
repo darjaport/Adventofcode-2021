@@ -32,6 +32,49 @@ class Day_6 {
         return list.size();
     }
 
+    public static long secondStar(ArrayList<Integer> list) {
+        Map<Integer, Long> values = new HashMap<>();
+        int i = 0;
+
+        while (i <= 8) {
+            values.put(i, 0L);
+            i++;
+        }
+
+        for (Integer a : list) {
+            values.put(a, values.get(a) + 1);
+        }
+
+        i = 0;
+        while (i < 256) {
+            int x = 0;
+            long zero = 0L;
+
+            while (x < 8) {
+                if (x == 0) {
+                    zero = values.get(x);
+                    values.put(x, values.get(x + 1));
+                } else {
+                    values.put(x, values.get(x + 1));
+                }
+                x++;
+            }
+
+            values.put(6, values.get(6) + zero);
+            values.put(8, zero);
+            i++;
+        }
+
+        long sum = 0L;
+        i = 0;
+        while (i <= 8) {
+            sum += values.get(i);
+            i++;
+        }
+
+        return sum;
+    }
+
     public static void main(String[] args) {
         try {
             BufferedReader br = new BufferedReader(new FileReader("day-6.txt"));
@@ -45,7 +88,8 @@ class Day_6 {
 
             br.close();
 
-            System.out.println("First star: " + firstStar(list));
+            // System.out.println("First star: " + firstStar(list));
+            System.out.println("First star: " + secondStar(list));
 
         } catch (Exception e) {
             System.out.println(e);
